@@ -1,0 +1,21 @@
+---
+hostname: R2
+mgmt: 10.0.0.202
+interface: ge-0/0/0
+loopback: 172.30.5.2
+units:
+  - unit: 112
+    vlan: 112
+    neighbor: R1
+    ip: 172.30.0.2
+    mask: 30
+  - unit: 127
+    vlan: 127
+    neighbor: R7
+    ip: 172.30.0.17
+    mask: 30
+  - unit: 123
+    vlan: 123
+    neighbor: R3
+    ip: 172.30.0.13
+    mask: 30

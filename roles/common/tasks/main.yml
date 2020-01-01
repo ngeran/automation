@@ -1,0 +1,27 @@
+---
+# Verify NETCONF Connectivity
+- name: Check NETCONF
+  wait_for:
+    host: "{{ansible_host}}"
+    port: 830
+    timeout: 5
+# Create directory Render to render the configurations
+- name: Create The Directory render
+  file:
+    path: "{{playbook_dir}}/roles/common/render"
+    state: directory
+# Render Initial Junos Configuration from Jinja2
+- name: Render initial configuration for junos devices
+  template:
+    src: "{{ playbook_dir }}/roles/common/templates/common_settings.j2"
+    dest: "{{playbook_dir}}/roles/common/render/{{ inventory_hostname }}.common_settings.conf"
+# Install Rendered Configuration
+#- name: Install rendered configuration
+#  juniper_junos_config:
+#    host: "{{ ansible_host }}"
+#    user: "{{username}}"
+#    passwd: "{{password}}"
+#    load: 'merge'
+#    src: "{{playbook_dir}}/roles/common/render/{{ inventory_hostname }}.common_settings.conf"
+#    comment: "commited ny Mr. Nikos 1"
+#    timeout: 10

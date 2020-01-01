@@ -1,0 +1,25 @@
+---
+hostname: R4
+mgmt: 10.0.0.204
+interface: ge-0/0/0
+loopback: 172.30.5.4
+units:
+  - unit: 134
+    vlan: 134
+    neighbor: R3
+    ip: 172.30.0.22
+    mask: 30
+  - unit: 145
+    vlan: 145
+    neighbor: R5
+    ip: 172.30.0.29
+    mask: 30
+  - unit: 149
+    vlan: 149
+    neighbor: R9
+    ip: 172.30.0.73
+    mask: 30
+orpf_neighbors:
+   - ge-0/0/0.127
+   - ge-0/0/0.123
+    

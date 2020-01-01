@@ -1,0 +1,16 @@
+---
+# vars file for initial-config
+username: admin
+password: manolis1
+
+credentials:
+  username: admin
+  password: manolis1
+  timeout: 20
+
+
+#CLI commands
+cli:
+  - "show version"
+
+#Variables

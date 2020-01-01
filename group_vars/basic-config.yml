@@ -1,0 +1,31 @@
+---
+global:
+  root_hash: $1$UxtJq/hZ$zz5DL1ydmcFN5/ayCtA1h1
+  login_message: "================================WARNING=================================\n\n This system is for the use of authorized users only. Individuals using\n this computer without authority or in excess of their authority, are\n subject to having all of their activities on this system monitored and\n recorded by system personnel.\n\n In the course of monitoring individuals improperly using the system,\n or in the course of system maintenance, the activities of authorized\n users may also be monitored.\n\n Anyone using this system expressly consents to such monitoring and is\n advised that if such monitoring reveals possible evidence of criminal\n activity, system personnel may provide the evidence of such monitoring\n to law enforcement officials.\n\n======================================================================"
+location:
+  time_zone: UTC
+  name_servers:
+    - 10.0.1.1
+    - 10.0.1.2
+  tacacs_servers:
+    - ip: 10.0.1.3
+      secret: $9$DPjmT6/tOIcApclvLVbaZUj.PTz39tu
+    - ip: 10.0.1.4
+      secret: $9$DPjmT6/tOIcApclvLVbaZUj.PTz39tu
+  syslog_servers:
+      - 10.0.1.5
+      - 10.0.1.6
+  ntp_servers:
+      - 10.0.1.7
+      - 10.0.1.8
+  snmp:
+    location: "Site 1"
+    contact: John Doe
+    polling:
+      - community: SuperSecret
+        clients: 10.0.1.0/24
+    traps:
+      - group_name: alarm_system1
+        target: 10.0.1.9
+      - group_name: alarm_system2
+        target: 10.0.1.10

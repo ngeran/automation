@@ -1,0 +1,58 @@
+---
+# Verify NETCONF Connectivity
+- name: Check NETCONF
+  wait_for:
+    host: "{{ansible_host}}"
+    port: 830
+    timeout: 10
+
+# Create directory Render to render the configurations
+- name: Create The Directory Render In Interfcae Configuraion Folder
+  file:
+    path: "{{playbook_dir}}/roles/interface-configuration/render"
+    state: directory
+
+# Render Initial Junos Configuration from Jinja2
+- name: Include Device Interface variables
+  include_vars:
+    file: "{{playbook_dir}}/host_vars/{{ inventory_hostname }}/interface-config.yml"
+
+# Render Initial Junos Configuration from Jinja2
+- name: Render Initial Interface Configuration for Junos devices
+  template:
+    src: "templates/basic-connectivity.j2"
+    dest: "{{playbook_dir}}/roles/interface-configuration/render/{{ inventory_hostname }}.basic.conf"
+
+# Cleanup interface settings
+#- name: Delete Interface
+#  juniper_junos_config:
+#    host: "{{ ansible_host }}"
+#    user: "{{username}}"
+#    passwd: "{{password}}"
+#    load: set
+#    lines:
+#      - delete interfaces ge-0/0/0
+#      - set interfaces ge-0/0/0 unit 0 family inet address 1.1.1.1/31
+#    comment: Delete Interface GE-0/0/0
+
+# Install Rendered Configuration
+#- name: Install rendered configuration
+#  juniper_junos_config:
+#    host: "{{ ansible_host }}"
+#    user: "{{username}}"
+#    passwd: "{{password}}"
+#    load: 'override'
+#    src: "{{playbook_dir}}/roles/interface-configuration/render/{{ inventory_hostname }}.basic.conf"
+#    comment: "Basic Interface Configuration"
+#    timeout: 20
+#
+#- name: Retrieve information from devices running Junos#
+#  juniper_junos_facts:
+#    host: "{{ ansible_host }}"
+#    user: "{{ username }}"
+#    passwd: "{{ password }}"
+#  register: junos
+#
+#- name: Print some facts
+#  debug:
+#    msg: "device {{junos.facts.hostname}} is a {{ junos.facts.model }} running version {{junos.facts.version}}"

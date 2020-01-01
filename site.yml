@@ -1,0 +1,14 @@
+---
+- name: Ping - Test Device Reachability
+  hosts:
+    - all
+  connection: local
+  gather_facts: no
+#  vars_files:
+#    - "{{playbook_dir}}/group_vars/basic-config.yml"
+#    - "{{playbook_dir}}/host_vars/interface-config.yml"
+  roles:
+    - Juniper.junos
+#    - common
+#   - interface-configuration
+    - facts

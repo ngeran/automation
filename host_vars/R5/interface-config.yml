@@ -1,0 +1,21 @@
+---
+hostname: R5
+mgmt: 10.0.0.205
+interface: ge-0/0/0
+loopback: 172.30.5.3
+units:
+  - unit: 145
+    vlan: 145
+    neighbor: R4
+    ip: 172.30.0.30
+    mask: 30
+  - unit: 156
+    vlan: 156
+    neighbor: R6
+    ip: 172.30.0.33
+    mask: 30
+  - unit: 159
+    vlan: 159
+    neighbor: R9
+    ip: 172.30.0.61
+    mask: 30

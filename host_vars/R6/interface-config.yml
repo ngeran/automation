@@ -1,0 +1,31 @@
+---
+hostname: R6
+mgmt: 10.0.0.206
+interface: ge-0/0/0
+loopback: 172.30.5.6
+units:
+  - unit: 156
+    vlan: 156
+    neighbor: R5
+    ip: 172.30.0.34
+    mask: 30
+  - unit: 136
+    vlan: 136
+    neighbor: R3
+    ip: 172.30.0.26
+    mask: 30
+  - unit: 134
+    vlan: 134
+    neighbor: R4
+    ip: 172.30.0.21
+    mask: 30
+  - unit: 116
+    vlan: 116
+    neighbor: R1
+    ip: 172.30.0.50
+    mask: 30
+  - unit: 167
+    vlan: 167
+    neighbor: R7
+    ip: 172.30.0.41
+    mask: 30
