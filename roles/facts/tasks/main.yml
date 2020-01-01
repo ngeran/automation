@@ -1,2 +1,7 @@
 ---
-# tasks file for facts
+# Verify NETCONF Connectivity
+- name: Check NETCONF
+  wait_for:
+    host: "{{ansible_host}}"
+    port: 830
+    timeout: 5
