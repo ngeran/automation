@@ -23,36 +23,18 @@
     src: "templates/basic-connectivity.j2"
     dest: "{{playbook_dir}}/roles/interface-configuration/render/{{ inventory_hostname }}.basic.conf"
 
-# Cleanup interface settings
-#- name: Delete Interface
-#  juniper_junos_config:
-#    host: "{{ ansible_host }}"
-#    user: "{{username}}"
-#    passwd: "{{password}}"
-#    load: set
-#    lines:
-#      - delete interfaces ge-0/0/0
-#      - set interfaces ge-0/0/0 unit 0 family inet address 1.1.1.1/31
-#    comment: Delete Interface GE-0/0/0
+# Install Rendered Configuration works with 14.1
+- name: Deploy config to device ... please wait
+  junos_config:
+    src: "{{playbook_dir}}/roles/interface-configuration/render/{{ inventory_hostname }}.basic.conf"
+    update: override
+    comment: Applied by Ansible Override Basic Interface Configuration
+    provider: "{{ credentials }}"
 
-# Install Rendered Configuration
-#- name: Install rendered configuration
-#  juniper_junos_config:
-#    host: "{{ ansible_host }}"
-#    user: "{{username}}"
-#    passwd: "{{password}}"
-#    load: 'override'
-#    src: "{{playbook_dir}}/roles/interface-configuration/render/{{ inventory_hostname }}.basic.conf"
-#    comment: "Basic Interface Configuration"
-#    timeout: 20
-#
-#- name: Retrieve information from devices running Junos#
-#  juniper_junos_facts:
-#    host: "{{ ansible_host }}"
-#    user: "{{ username }}"
-#    passwd: "{{ password }}"
-#  register: junos
-#
-#- name: Print some facts
-#  debug:
-#    msg: "device {{junos.facts.hostname}} is a {{ junos.facts.model }} running version {{junos.facts.version}}"
+# Change the Description on Interfaces
+#- name: Change description on interfaces based on a list of variable - Works with 14.1
+#  junos_config:
+#    lines:
+#      - set interfaces ge-0/0/0 description "test 123"
+#    comment: "Update description of interface "
+#    provider: "{{ credentials }}"

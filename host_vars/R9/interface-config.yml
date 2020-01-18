@@ -3,7 +3,7 @@ hostname: R9
 mgmt: 10.0.0.209
 interface: ge-0/0/0
 loopback: 172.30.5.9
-default-gateway: 10.0.0.1
+gateway: 10.0.0.1
 units:
   - unit: 139
     vlan: 139
