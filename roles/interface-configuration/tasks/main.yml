@@ -23,13 +23,33 @@
     src: "templates/basic-connectivity.j2"
     dest: "{{playbook_dir}}/roles/interface-configuration/render/{{ inventory_hostname }}.basic.conf"
 
-# Install Rendered Configuration works with 14.1
+# Override Current Configuration with Rendered Configuration works with 14.1
 - name: Deploy config to device ... please wait
   junos_config:
     src: "{{playbook_dir}}/roles/interface-configuration/render/{{ inventory_hostname }}.basic.conf"
     update: override
     comment: Applied by Ansible Override Basic Interface Configuration
     provider: "{{ credentials }}"
+
+
+- name: collect default set of facts and configuration
+  junos_facts:
+    gather_subset: config
+    config_format: text
+    provider: "{{ credentials }}"
+  register: "result_text"
+
+# Create directory configurations to render the configurations
+- name: Create The Directory Configuraion In Playbook Directory
+  file:
+    path: "{{playbook_dir}}/configurations/text"
+    state: directory
+
+- name: Copy Configuration in Configuration Text Directory
+  copy:
+    content: "{{ result_text.ansible_facts.ansible_net_config}}"
+    dest: "{{ playbook_dir }}/configurations/text/{{ inventory_hostname }}_base.conf"
+
 
 # Change the Description on Interfaces
 #- name: Change description on interfaces based on a list of variable - Works with 14.1
