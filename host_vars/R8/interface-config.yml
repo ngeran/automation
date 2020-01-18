@@ -3,24 +3,20 @@ hostname: R8
 mgmt: 10.0.0.208
 interface: ge-0/0/0
 loopback: 172.30.5.8
+default-gateway: 10.0.0.1
 units:
-  - unit: 118
-    vlan: 118
-    neighbor: R1
-    ip: 172.30.0.10
+  - unit: 148
+    vlan: 148
+    neighbor: R4
+    ip: 172.30.0.42
     mask: 30
-  - unit: 138
-    vlan: 138
-    neighbor: R3
-    ip: 172.30.0.54
-    mask: 30
-  - unit: 178
-    vlan: 178
-    neighbor: R7
-    ip: 172.30.0.46
+  - unit: 158
+    vlan: 158
+    neighbor: R5
+    ip: 172.30.0.50
     mask: 30
   - unit: 810
     vlan: 810
     neighbor: R10
-    ip: 172.30.0.86
+    ip: 172.30.0.65
     mask: 30

@@ -3,14 +3,15 @@ hostname: R10
 mgmt: 10.0.0.210
 interface: ge-0/0/0
 loopback: 172.30.5.10
+default-gateway: 10.0.0.1
 units:
-  - unit: 810
-    vlan: 810
-    neighbor: R8
-    ip: 172.30.0.86
-    mask: 30
   - unit: 710
     vlan: 710
     neighbor: R7
-    ip: 172.30.0.82
+    ip: 172.30.0.62
+    mask: 30
+  - unit: 810
+    vlan: 810
+    neighbor: R8
+    ip: 172.30.0.66
     mask: 30

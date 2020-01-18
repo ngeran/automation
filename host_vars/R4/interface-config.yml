@@ -3,23 +3,30 @@ hostname: R4
 mgmt: 10.0.0.204
 interface: ge-0/0/0
 loopback: 172.30.5.4
+default-gateway: 10.0.0.1
 units:
+  - unit: 124
+    vlan: 124
+    neighbor: R2
+    ip: 172.30.0.18
+    mask: 30
   - unit: 134
     vlan: 134
     neighbor: R3
-    ip: 172.30.0.22
+    ip: 172.30.0.26
     mask: 30
   - unit: 145
     vlan: 145
     neighbor: R5
-    ip: 172.30.0.29
+    ip: 172.30.0.33
+    mask: 30
+  - unit: 148
+    vlan: 148
+    neighbor: R8
+    ip: 172.30.0.41
     mask: 30
   - unit: 149
     vlan: 149
     neighbor: R9
-    ip: 172.30.0.73
+    ip: 172.30.0.37
     mask: 30
-orpf_neighbors:
-   - ge-0/0/0.127
-   - ge-0/0/0.123
-    

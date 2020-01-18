@@ -10,6 +10,6 @@
   roles:
     - Juniper.junos
 #    - common
-#   - interface-configuration
-    - facts
+   - interface-configuration
+#    - facts
 #	test

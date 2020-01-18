@@ -3,29 +3,20 @@ hostname: R3
 mgmt: 10.0.0.203
 interface: ge-0/0/0
 loopback: 172.30.5.3
+default-gateway: 10.0.0.1
 units:
   - unit: 123
     vlan: 123
     neighbor: R2
     ip: 172.30.0.14
     mask: 30
-  - unit: 138
-    vlan: 138
-    neighbor: R8
-    ip: 172.30.0.53
-    mask: 30
   - unit: 134
     vlan: 134
     neighbor: R4
-    ip: 172.30.0.21
-    mask: 30
-  - unit: 136
-    vlan: 136
-    neighbor: R6
     ip: 172.30.0.25
     mask: 30
   - unit: 139
     vlan: 139
     neighbor: R9
-    ip: 172.30.0.77
+    ip: 172.30.0.29
     mask: 30
