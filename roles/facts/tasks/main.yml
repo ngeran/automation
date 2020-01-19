@@ -5,3 +5,27 @@
     host: "{{ansible_host}}"
     port: 830
     timeout: 5
+
+- name: Retrieve information from devices running Junos
+  junos_facts:
+    provider: "{{ credentials }}"
+    gather_subset: hardware
+  register: junos
+
+- name: Print some facts
+  debug:
+    msg: "device {{ junos.ansible_facts.ansible_net_hostname }} is a {{ junos.ansible_facts.ansible_net_model }} running junos version {{ junos.ansible_facts.ansible_net_version }}"
+
+- name: pass commands on junos devices
+  junos_command:
+    provider: "{{ credentials }}"
+    display: text
+    commands:
+      - show version
+      - show system uptime
+  register: cli
+
+- name: save the output of the commands in the command dir
+  copy:
+    content: "{{ cli.stdout_lines }}"
+    dest: "{{playbook_dir}}/command/{{inventory_hostname}}.text"

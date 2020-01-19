@@ -11,6 +11,6 @@
     - Juniper.junos
 #    - common
 #    - interface-configuration
-    - ospf
-#    - facts
+#    - ospf
+    - facts
 #	test
