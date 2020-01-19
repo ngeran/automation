@@ -1,12 +1,16 @@
-protocols {
-  ospf {
-  {% for area in areas %}
-        area {{ area.area_id }}{
-        {% for interface in areas.interfaces %}
-              interface {{ area.interface }};
-        {% endfor %}
-                }
-              }
-  {% endfor %}
+apply-groups [ basic OSPF ];
+routing-options {
 
+    router-id {{ loopback }};
+}
+protocols {
+    ospf {
+  {% for area in areas %}
+        area {{ area.area_id }} {
+        {% for item in area.interfaces %}
+        interface {{ item }};
+        {% endfor %}
+        }
+  {% endfor %}
+  }
 }

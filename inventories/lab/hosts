@@ -8,7 +8,8 @@ R6      ansible_host=10.0.0.206
 R7      ansible_host=10.0.0.207
 R8      ansible_host=10.0.0.208
 R9      ansible_host=10.0.0.209
-R10     ansible_host=10.0.0.210
+#R10     ansible_host=10.0.0.210
+[vMX]
 #vMX-11  ansible_host=10.0.0.211
 [VSRX]
 #vSRX-12 ansible_host=10.0.0.212

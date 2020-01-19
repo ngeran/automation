@@ -15,3 +15,8 @@ units:
     neighbor: R4
     ip: 172.30.0.38
     mask: 30
+areas:
+  - area_id: 0.0.0.10
+    interfaces:
+      - ge-0/0/0.139
+      - ge-0/0/0.149

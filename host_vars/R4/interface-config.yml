@@ -30,3 +30,13 @@ units:
     neighbor: R9
     ip: 172.30.0.37
     mask: 30
+areas:
+  - area_id: 0.0.0.1
+    interfaces:
+      - ge-0/0/0.124
+      - ge-0/0/0.134
+      - ge-0/0/0.145
+      - ge-0/0/0.148
+  - area_id: 0.0.0.10
+    interfaces:
+      - ge-0/0/0.149

@@ -1,2 +1,34 @@
 ---
-# tasks file for ospf
+# Verify NETCONF Connectivity
+- name: Check NETCONF
+  wait_for:
+    host: "{{ansible_host}}"
+    port: 830
+    timeout: 10
+
+# Create directory Render to render the OSPF configurations
+- name: Create The Directory Render In Interfcae Configuraion Folder
+  file:
+    path: "{{playbook_dir}}/roles/ospf/render"
+    state: directory
+
+# Render OSPF COnfiguration  from Jinja2
+- name: Include Device OSPF variables
+  include_vars:
+    file: "{{playbook_dir}}/host_vars/{{ inventory_hostname }}/interface-config.yml"
+
+# Render OSPF Configuration from Jinja2
+- name: Render Initial Interface Configuration for Junos devices
+  template:
+    src: "templates/ospf.j2"
+    dest: "{{playbook_dir}}/roles/ospf/render/{{ inventory_hostname }}_ospf.conf"
+
+# Merge OSPF Configuration to Devices
+- name: Merge OSPF Configuration to Devices
+  junos_config:
+    provider: "{{  credentials }}"
+    src: "{{playbook_dir}}/roles/ospf/render/{{ inventory_hostname }}_ospf.conf"
+    update: merge
+    src_format: text
+    backup: yes
+    comment: Merge OSPF Configuration

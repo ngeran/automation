@@ -35,3 +35,16 @@ units:
     neighbor: R8
     ip: 172.30.0.49
     mask: 30
+areas:
+  - area_id: 0.0.0.0
+    interfaces:
+      - ge-0/0/0.115
+      - ge-0/0/0.156
+  - area_id: 0.0.0.1
+    interfaces:
+      - ge-0/0/0.125
+      - ge-0/0/0.145
+      - ge-0/0/0.158
+  - area_id: 0.0.0.2
+    interfaces:
+      - ge-0/0/0.157

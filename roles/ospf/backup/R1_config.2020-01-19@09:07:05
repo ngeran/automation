@@ -1,0 +1,117 @@
+## Last changed: 2020-01-19 13:58:57 UTC
+version 14.1R1.10;
+groups {
+    basic {
+        system {
+            host-name R1;
+            root-authentication {
+                encrypted-password "$1$vQqOn2iC$TlvjMurEPB9eo.O21zhn9/";
+            }
+            login {
+                user admin {
+                    uid 2002;
+                    class super-user;
+                    authentication {
+                        encrypted-password "$1$YCVjYya0$XCHE72IU.gSSkBaHHB8uS.";
+                    }
+                }
+            }
+            services {
+                ssh;
+                netconf {
+                    ssh;
+                }
+            }
+        }
+        routing-options {
+            router-id 172.30.5.1;
+            forwarding-table {
+                ecmp-fast-reroute;
+            }
+        }
+    }
+    OSPF {
+        protocols {
+            ospf {
+                traffic-engineering;
+                area 0.0.0.0 {
+                    interface <ge-*> {
+                        interface-type p2p;
+                        link-protection;
+                        ldp-synchronization;
+                        bfd-liveness-detection {
+                            minimum-interval 300;
+                            multiplier 3;
+                        }
+                    }
+                    interface em0.0 {
+                        disable;
+                    }
+                    interface fxp0.0 {
+                        disable;
+                    }
+                    interface lo0.0 {
+                        passive;
+                    }
+                }
+            }
+        }
+    }
+}
+apply-groups [ basic OSPF ];
+interfaces {
+    ge-0/0/0 {
+        flexible-vlan-tagging;
+        encapsulation flexible-ethernet-services;
+        unit 112 {
+            description "HOST:R2|PORT:GE-0/0/0|UNIT:112";
+            vlan-id 112;
+            family inet {
+                address 172.30.0.1/30;
+            }
+        }
+        unit 115 {
+            description "HOST:R5|PORT:GE-0/0/0|UNIT:115";
+            vlan-id 115;
+            family inet {
+                address 172.30.0.5/30;
+            }
+        }
+        unit 116 {
+            description "HOST:R6|PORT:GE-0/0/0|UNIT:116";
+            vlan-id 116;
+            family inet {
+                address 172.30.0.9/30;
+            }
+        }
+    }
+    em0 {
+        unit 0 {
+            family inet {
+                address 10.0.0.201/24;
+            }
+        }
+    }
+    lo0 {
+        unit 0 {
+            family inet {
+                address 172.30.5.1/32;
+            }
+        }
+    }
+}
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop 10.0.0.1;
+    }
+    router-id 172.30.5.1;
+}
+protocols {
+    ospf {
+        area 0.0.0.0 {
+            interface ge-0/0/0.112;
+            interface ge-0/0/0.115;
+            interface ge-0/0/0.116;
+        }
+    }
+}

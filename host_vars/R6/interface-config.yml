@@ -20,3 +20,11 @@ units:
     neighbor: R7
     ip: 172.30.0.57
     mask: 30
+areas:
+  - area_id: 0.0.0.0
+    interfaces:
+      - ge-0/0/0.116
+      - ge-0/0/0.156
+  - area_id: 0.0.0.2
+    interfaces:
+      - ge-0/0/0.167

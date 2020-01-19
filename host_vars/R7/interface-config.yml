@@ -20,3 +20,8 @@ units:
     neighbor: R10
     ip: 172.30.0.61
     mask: 30
+areas:
+  - area_id: 0.0.0.2
+    interfaces:
+      - ge-0/0/0.157
+      - ge-0/0/0.167
