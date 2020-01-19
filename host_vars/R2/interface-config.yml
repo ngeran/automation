@@ -25,3 +25,12 @@ units:
     neighbor: R5
     ip: 172.30.0.21
     mask: 30
+areas:
+  - area_id: 0.0.0.0
+    interfaces:
+      - ge-0/0/0.112
+      - ge-0/0/0.123
+  - area_id: 0.0.0.1
+    interfaces:
+      - ge-0/0/0.124
+      - ge-0/0/0.125
