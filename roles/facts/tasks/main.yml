@@ -29,3 +29,12 @@
   copy:
     content: "{{ cli.stdout_lines }}"
     dest: "{{playbook_dir}}/command/{{inventory_hostname}}.text"
+
+- name: get device facts
+  junos_facts:
+    provider: "{{ credentials }}"
+  register: junos
+
+- name: show device facts
+  debug:
+    var: junos
