@@ -1,0 +1,7 @@
+production:
+  branch: main
+  url: https://prod.example.com
+
+development:
+  branch: development
+  url: https://dev.example.com
