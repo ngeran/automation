@@ -1,13 +1,9 @@
 name: Deploy Configuration to Juniper Routers
-
+# Controls when the workflow will run
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - config.j2
-      - scripts/**
-
+# Allows you to run this workflow manually forn the actions tab
+  workflow_dispatch:
+# A workflow run is made up of one or more
 jobs:
   run-on: ubuntu-latest
 
