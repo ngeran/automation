@@ -1,0 +1,32 @@
+## Router name {{ router_name }}
+
+set system host-name {{ router_name }}
+
+## OSPF Configuration (if interfaces are defined)
+
+set routing-options router-id {{ router_id }}
+{% if interfaces %}  # Only include OSPF config if interfaces are defined
+set protocols ospf area 0 interface lo0.0  # Loopback interface is crucial for OSPF
+
+{% for interface in interfaces %}
+set interfaces {{ interface.name }} unit 0 family inet address {{ interface.ip }}
+set protocols ospf area {{ interface.area }} interface {{ interface.name }}.0
+{% endfor %}
+{% endif %}
+
+
+## BGP Configuration
+set routing-options autonomous-system {{ asn }}
+set protocols bgp group ibgp type {{ router_type }}  # Use the router_type from YAML
+
+{% for neighbor_ip, description in neighbors.items() %}
+set protocols bgp group ibgp neighbor {{ neighbor_ip }} description "{{ description }}"
+{% endfor %}
+
+# Example policy (adjust as needed)
+# set policy-options policy-statement local-preference term 1 from protocol bgp
+# set policy-options policy-statement local-preference term 1 then local-preference 100
+# set policy-options policy-statement local-preference term 1 then accept
+
+# Apply the policy (if you have one)
+# set protocols bgp group ibgp export local-preference
