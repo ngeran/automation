@@ -1,7 +1,0 @@
-{# Juniper BGP configuraration example  #}
-set routing-options autonomous-system {{ local_as }}
-set protocols bgp group {{ bgp_group_name }} type {{ internal_or_external }}
-set protocols bgp group {{ bgp_group_name }} local-address {{ lo0 }}
-{% for peer in peers %}
-set protocols bgp group {{ bgp_group_name }} neighbor {{ peer.ip }} peer-as {{ peer.as_number }}
-{% endfor %}
