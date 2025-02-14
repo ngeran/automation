@@ -2,12 +2,12 @@ import yaml
 from jinja2 import Environment, FileSystemLoader
 
 # Load YAML data
-with open("bgp_data.yaml", "r") as yaml_file:
+with open("data/bgp.yml", "r") as yaml_file:
     data = yaml.safe_load(yaml_file)
 
 # Load Jinja2 template
 env = Environment(loader=FileSystemLoader("."))  # Load templates from the current directory
-template = env.get_template("bgp_template.j2")
+template = env.get_template("templates/bgp.j2")
 
 # Render configuration
 bgp_config = template.render(data)
