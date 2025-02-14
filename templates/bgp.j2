@@ -1,14 +1,13 @@
-{# templates/bgp.j2 #}
-set routing-options router-id {{ data.router_id }}
-{% for group in data.bgp_groups %}
-set protocols bgp group {{ group.group_name }} type external
-set protocols bgp group {{ group.group_name }} local-address {{ group.local_address }}
-set protocols bgp group {{ group.group_name }} peer-as {{ group.peer_as }}
-set protocols bgp group {{ group.group_name }} family inet unicast
-set protocols bgp group {{ group.group_name }} neighbor {{ group.peer_address }} peer-as {{ group.peer_as }}
-    {% for network in group.networks %}
-set policy-options policy-statement {{ network.name }} term 1 from route-filter {{ network.prefix }} exact
-set policy-options policy-statement {{ network.name }} term 1 then accept
-set protocols bgp group {{ group.group_name }} import {{ network.name }}
-    {% endfor %}
-{% endfor %}
+protocols {
+    bgp {
+        group {{ bgp.group_name }} {
+            type {{ bgp.type }};
+            local-address {{ bgp.local_address }};
+            {% for neighbor in bgp.neighbors %}
+            neighbor {{ neighbor.ip }} {
+                peer-as {{ neighbor.asn }};
+            }
+            {% endfor %}
+        }
+    }
+}
