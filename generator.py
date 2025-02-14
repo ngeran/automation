@@ -1,54 +1,40 @@
-import os
+from flask import Flask, request, jsonify
 import yaml
 from jinja2 import Environment, FileSystemLoader
+from jnpr.junos import Device  # Import PyEZ
+
+app = Flask(__name__)
+
+# Jinja2 environment
+env = Environment(loader=FileSystemLoader("templates"))
 
 
-def generate_config(config_file, template_file="templates/juniper_config.j2"):
-    """Generates router config from YAML and Jinja2 template."""
-
+@app.route("/generate-bgp-config", methods=["POST"])
+def generate_bgp_config():
     try:
-        with open(config_file, "r") as f:
-            config_data = yaml.safe_load(f)
-    except FileNotFoundError:
-        print(f"Error: Configuration file '{config_file}' not found.")
-        return
-    except yaml.YAMLError as e:
-        print(f"Error parsing YAML file: {e}")
-        return
+        data = request.get_json()
 
-    router_name = config_data.get("router_name")
-    router_id = config_data.get("router_id")
-    asn = config_data.get("asn")
-    neighbors = config_data.get("neighbors", {})
-    interfaces = config_data.get("interfaces", [])
-    router_type = config_data.get("router_type", "internal")  # Default to internal BGP
+        with open("data/bgp.yml", "w") as f:
+            yaml.dump(data, f)
 
-    if not all([router_name, router_id, asn]):
-        print("Error: router_name, router_id, and asn are required in the YAML file.")
-        return
+        with open("data/bgp.yml", "r") as f:  # Read the yaml file
+            yaml_data = yaml.safe_load(f)
 
-    template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template(os.path.basename(template_file))
+        bgp_template = env.get_template("bgp.j2")
+        bgp_config = bgp_template.render(data=yaml_data)
 
-    context = {
-        "router_name": router_name,
-        "router_id": router_id,
-        "asn": asn,
-        "neighbors": neighbors,
-        "interfaces": interfaces,
-        "router_type": router_type,  # Pass the router type to the template
-    }
+        # Juniper PyEZ configuration (replace with your details)
+        with Device(host="your_router_ip", user="your_username", password="your_password") as dev:
+            dev.open()  # Open connection
+            dev.load(config_str=bgp_config, format="set")  # Load the config
+            dev.commit()  # Commit changes
 
-    config = template.render(context)
+        return jsonify({"message": "BGP Configuration applied successfully!"}), 200
 
-    output_filename = f"{router_name}_config.juniper"
-    with open(output_filename, "w") as f:
-        f.write(config)
-
-    print(f"Configuration written to {output_filename}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({"message": f"An error occurred: {e}"}), 500  # Return error status code
 
 
-# Example usage (no changes needed here):
-config_file = "router_config.yaml"
-generate_config(config_file)
+if __name__ == "__main__":
+    app.run(debug=True)

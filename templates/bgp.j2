@@ -1,91 +1,14 @@
-{% if protocols.bgp %}
-router bgp {{ bgp_as_number }} {
-    {% if bgp_router_id %}
-    router-id {{ bgp_router_id }};
-    {% endif %}
-
-    {% if bgp_multipath %}
-    multipath;
-    {% endif %}
-
-    {% for neighbor in bgp_neighbors %}
-    neighbor {{ neighbor.address }} {
-        {% if neighbor.peer_as %}
-        peer-as {{ neighbor.peer_as }};
-        {% endif %}
-
-        {% if neighbor.description %}
-        description "{{ neighbor.description }}";
-        {% endif %}
-
-        {% if neighbor.import_policies %}
-        import [
-            {% for policy in neighbor.import_policies %}
-            {{ policy }}
-            {% endfor %}
-        ];
-        {% endif %}
-
-        {% if neighbor.export_policies %}
-        export [
-            {% for policy in neighbor.export_policies %}
-            {{ policy }}
-            {% endfor %}
-        ];
-        {% endif %}
-
-        {% if neighbor.family %}
-        family {{ neighbor.family }} {
-            {% if neighbor.family.inet %}
-            inet {
-                unicast;
-            }
-            {% endif %}
-            {% if neighbor.family.inet6 %}
-            inet6 {
-                unicast;
-            }
-            {% endif %}
-            {% if neighbor.family.mpls %}
-            mpls;
-            {% endif %}
-        }
-        {% endif %}
-
-        {% if neighbor.ttl %}
-        ttl {{ neighbor.ttl }};
-        {% endif %}
-
-        {% if neighbor.bfd %}
-        bfd;
-        {% endif %}
-
-    }
+{# templates/bgp.j2 #}
+set routing-options router-id {{ data.router_id }}
+{% for group in data.bgp_groups %}
+set protocols bgp group {{ group.group_name }} type external
+set protocols bgp group {{ group.group_name }} local-address {{ group.local_address }}
+set protocols bgp group {{ group.group_name }} peer-as {{ group.peer_as }}
+set protocols bgp group {{ group.group_name }} family inet unicast
+set protocols bgp group {{ group.group_name }} neighbor {{ group.peer_address }} peer-as {{ group.peer_as }}
+    {% for network in group.networks %}
+set policy-options policy-statement {{ network.name }} term 1 from route-filter {{ network.prefix }} exact
+set policy-options policy-statement {{ network.name }} term 1 then accept
+set protocols bgp group {{ group.group_name }} import {{ network.name }}
     {% endfor %}
-
-    {% if bgp_groups %}
-    {% for group in bgp_groups %}
-    group {{ group.name }} {
-        type {{ group.type }};
-        {% if group.import_policies %}
-        import [
-            {% for policy in group.import_policies %}
-            {{ policy }}
-            {% endfor %}
-        ];
-        {% endif %}
-        {% if group.export_policies %}
-        export [
-            {% for policy in group.export_policies %}
-            {{ policy }}
-            {% endfor %}
-        ];
-        {% endif %}
-        {% for neighbor in group.neighbors %}
-        neighbor {{ neighbor }};
-        {% endfor %}
-    }
-    {% endfor %}
-    {% endif %}
-}
-{% endif %}
+{% endfor %}
