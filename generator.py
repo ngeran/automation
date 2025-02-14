@@ -17,3 +17,7 @@ with open("bgp_config.txt", "w") as config_file:
     config_file.write(bgp_config)
 
 print("BGP configuration generated successfully and saved to bgp_config.txt")
+
+# Read the configuration file
+with open("bgp_config.txt", "r") as generated_file:
+    print(generated_file.read())
