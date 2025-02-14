@@ -13,7 +13,7 @@ template = env.get_template("templates/bgp.j2")
 bgp_config = template.render(data)
 
 # Save the generated configuration to a file
-with open("bgp_config.txt", "w") as config_file:
+with open("output/bgp_config.txt", "w") as config_file:
     config_file.write(bgp_config)
 
 print("BGP configuration generated successfully and saved to bgp_config.txt")
