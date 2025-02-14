@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Configuration Form</title>
+</head>
+<body>
+    <h1>Configure Today</h1>
+    <form action="/submit" method="POST">
+        <h2>Interface</h2>
+        {% for interface in interfaces %}
+            <input type="checkbox" name="interface" value="{{ interface }}"> {{ interface }}<br>
+        {% endfor %}
+
+        <h2>Protocols</h2>
+        {% for protocol in protocols %}
+            <input type="checkbox" name="protocol" value="{{ protocol }}"> {{ protocol }}<br>
+        {% endfor %}
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

@@ -1,32 +1,91 @@
-## Router name {{ router_name }}
+{% if protocols.bgp %}
+router bgp {{ bgp_as_number }} {
+    {% if bgp_router_id %}
+    router-id {{ bgp_router_id }};
+    {% endif %}
 
-set system host-name {{ router_name }}
+    {% if bgp_multipath %}
+    multipath;
+    {% endif %}
 
-## OSPF Configuration (if interfaces are defined)
+    {% for neighbor in bgp_neighbors %}
+    neighbor {{ neighbor.address }} {
+        {% if neighbor.peer_as %}
+        peer-as {{ neighbor.peer_as }};
+        {% endif %}
 
-set routing-options router-id {{ router_id }}
-{% if interfaces %}  # Only include OSPF config if interfaces are defined
-set protocols ospf area 0 interface lo0.0  # Loopback interface is crucial for OSPF
+        {% if neighbor.description %}
+        description "{{ neighbor.description }}";
+        {% endif %}
 
-{% for interface in interfaces %}
-set interfaces {{ interface.name }} unit 0 family inet address {{ interface.ip }}
-set protocols ospf area {{ interface.area }} interface {{ interface.name }}.0
-{% endfor %}
+        {% if neighbor.import_policies %}
+        import [
+            {% for policy in neighbor.import_policies %}
+            {{ policy }}
+            {% endfor %}
+        ];
+        {% endif %}
+
+        {% if neighbor.export_policies %}
+        export [
+            {% for policy in neighbor.export_policies %}
+            {{ policy }}
+            {% endfor %}
+        ];
+        {% endif %}
+
+        {% if neighbor.family %}
+        family {{ neighbor.family }} {
+            {% if neighbor.family.inet %}
+            inet {
+                unicast;
+            }
+            {% endif %}
+            {% if neighbor.family.inet6 %}
+            inet6 {
+                unicast;
+            }
+            {% endif %}
+            {% if neighbor.family.mpls %}
+            mpls;
+            {% endif %}
+        }
+        {% endif %}
+
+        {% if neighbor.ttl %}
+        ttl {{ neighbor.ttl }};
+        {% endif %}
+
+        {% if neighbor.bfd %}
+        bfd;
+        {% endif %}
+
+    }
+    {% endfor %}
+
+    {% if bgp_groups %}
+    {% for group in bgp_groups %}
+    group {{ group.name }} {
+        type {{ group.type }};
+        {% if group.import_policies %}
+        import [
+            {% for policy in group.import_policies %}
+            {{ policy }}
+            {% endfor %}
+        ];
+        {% endif %}
+        {% if group.export_policies %}
+        export [
+            {% for policy in group.export_policies %}
+            {{ policy }}
+            {% endfor %}
+        ];
+        {% endif %}
+        {% for neighbor in group.neighbors %}
+        neighbor {{ neighbor }};
+        {% endfor %}
+    }
+    {% endfor %}
+    {% endif %}
+}
 {% endif %}
-
-
-## BGP Configuration
-set routing-options autonomous-system {{ asn }}
-set protocols bgp group ibgp type {{ router_type }}  # Use the router_type from YAML
-
-{% for neighbor_ip, description in neighbors.items() %}
-set protocols bgp group ibgp neighbor {{ neighbor_ip }} description "{{ description }}"
-{% endfor %}
-
-# Example policy (adjust as needed)
-# set policy-options policy-statement local-preference term 1 from protocol bgp
-# set policy-options policy-statement local-preference term 1 then local-preference 100
-# set policy-options policy-statement local-preference term 1 then accept
-
-# Apply the policy (if you have one)
-# set protocols bgp group ibgp export local-preference

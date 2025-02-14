@@ -1,0 +1,68 @@
+{% if protocols.ospf %}
+router ospf {
+    {% if ospf_router_id %}
+    router-id {{ ospf_router_id }};
+    {% endif %}
+
+    {% if ospf_area %}
+    area {{ ospf_area.id }} {
+        {% if ospf_area.interfaces %}
+        {% for interface in ospf_area.interfaces %}
+        interface {{ interface }} {
+            {% if ospf_area.interfaces[interface].cost %}
+            cost {{ ospf_area.interfaces[interface].cost }};
+            {% endif %}
+            {% if ospf_area.interfaces[interface].priority %}
+            priority {{ ospf_area.interfaces[interface].priority }};
+            {% endif %}
+            {% if ospf_area.interfaces[interface].hello_interval %}
+            hello-interval {{ ospf_area.interfaces[interface].hello_interval }};
+            {% endif %}
+            {% if ospf_area.interfaces[interface].dead_interval %}
+            dead-interval {{ ospf_area.interfaces[interface].dead_interval }};
+            {% endif %}
+            {% if ospf_area.interfaces[interface].retransmit_interval %}
+            retransmit-interval {{ ospf_area.interfaces[interface].retransmit_interval }};
+            {% endif %}
+            {% if ospf_area.interfaces[interface].authentication %}
+            authentication {
+                {{ ospf_area.interfaces[interface].authentication }};
+            }
+            {% endif %}
+            {% if ospf_area.interfaces[interface].passive %}
+            passive;
+            {% endif %}
+        }
+        {% endfor %}
+        {% endif %}
+
+        {% if ospf_area.stub %}
+        stub {
+            {% if ospf_area.stub.no_summary %}
+            no-summary;
+            {% endif %}
+            {% if ospf_area.stub.default_cost %}
+            default-cost {{ ospf_area.stub.default_cost }};
+            {% endif %}
+        }
+        {% endif %}
+    }
+    {% endif %}
+
+    {% if ospf_export_policies %}
+    export [
+        {% for policy in ospf_export_policies %}
+        {{ policy }}
+        {% endfor %}
+    ];
+    {% endif %}
+
+    {% if ospf_import_policies %}
+    import [
+        {% for policy in ospf_import_policies %}
+        {{ policy }}
+        {% endfor %}
+    ];
+    {% endif %}
+}
+{% endif %}
