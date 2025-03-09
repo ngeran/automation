@@ -1,0 +1,13 @@
+configurations:
+  - template_data: "interface_description"
+    template: "interface_description"
+    description: "Add or Replace the Interface Description"
+  - template_data: "configure_bgp"
+    template: "configure_bgp"
+    description: "Configure BGP Routing"
+  - template_data: "add_prefix_list"
+    template: "add_prefix_list"
+    description: "Add a Prefix list"
+  - template_data: "add_basic_device_group"
+    template: "add_basic_device_group"
+    description: "Apply the basic device configuration"
