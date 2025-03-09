@@ -1,13 +1,5 @@
-protocols {
-    bgp {
-        group {{ bgp.group_name }} {
-            type {{ bgp.type }};
-            local-address {{ bgp.local_address }};
-            {% for neighbor in bgp.neighbors %}
-            neighbor {{ neighbor.ip }} {
-                peer-as {{ neighbor.asn }};
-            }
-            {% endfor %}
-        }
-    }
-}
+set protocols bgp group {{ bgp.group_name }} type {{ bgp.type }}
+set protocols bgp group {{ bgp.group_name }} local-address {{ bgp.local_address }}
+{% for neighbor in bgp.neighbors %}
+set protocols bgp group {{ bgp.group_name }} neighbor {{ neighbor.ip }} peer-as {{ neighbor.asn }}
+{% endfor %}

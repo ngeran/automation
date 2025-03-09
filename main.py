@@ -1,28 +1,46 @@
 # main.py
-# Purpose: Orchestrates configuration generation and application by combining modular scripts.
-#          Runs from the root directory and imports scripts from the 'scripts/' directory.
+# Purpose: Orchestrates Juniper device configuration updates with optimized error handling.
 
-# Import functions from scripts in the scripts/ directory
+import os
+import logging
 from scripts.configuration_generator import generate_configuration
-from scripts.connect_to_host import apply_config_to_all
+from scripts.connect_to_host import load_connection_data
+from scripts.configure_host import apply_config_to_all
+
+# Configure logging with directory creation
+log_dir = "logs"
+os.makedirs(log_dir, exist_ok=True)  # Create logs/ if it doesn’t exist
+logging.basicConfig(
+    filename=os.path.join(log_dir, "config_script.log"),
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 def main():
-    """
-    Main function to generate a configuration and apply it to devices.
+    """Main function to manage Juniper device configuration updates."""
+    try:
+        # Step 1: Generate configuration
+        print("Step 1: Generating configuration...")
+        logger.info("Starting configuration generation")
+        config_file = generate_configuration()
+        if not config_file:
+            logger.error("Configuration generation failed")
+            return
 
-    Steps:
-        1. Generate the configuration file using configuration_generator.
-        2. Apply the configuration to all devices using connect_to_host.
-    """
-    # Step 1: Generate the configuration
-    config_file = generate_configuration()
-    if not config_file:
-        print("Configuration generation failed. Exiting.")
-        return
+        # Load devices
+        devices = load_connection_data()
+        logger.info(f"Loaded {len(devices)} devices")
 
-    # Step 2: Apply the configuration to all devices
-    apply_config_to_all(config_file)
+        # Steps 2-4: Connect, backup, apply
+        print("\nStep 2: Connecting to devices...")
+        print("Step 3: Backing up configurations...")
+        print("Step 4: Applying configurations...")
+        apply_config_to_all(devices, config_file)
+
+        logger.info("Configuration process completed successfully")
+    except Exception as e:
+        logger.error(f"Main process failed: {e}")
 
 if __name__ == "__main__":
-    # Entry point: Run the script only if executed directly
     main()

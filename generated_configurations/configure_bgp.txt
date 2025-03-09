@@ -1,0 +1,6 @@
+set protocols bgp group EXTERNAL type external
+set protocols bgp group EXTERNAL local-address 192.168.1.1
+
+set protocols bgp group EXTERNAL neighbor 192.168.1.2 peer-as 65002
+
+set protocols bgp group EXTERNAL neighbor 192.168.1.3 peer-as 65003

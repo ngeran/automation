@@ -1,0 +1,90 @@
+2025-03-09 19:02:45,101 - INFO - Starting configuration generation
+2025-03-09 19:02:50,957 - INFO - Configuration generated: ./generated_configurations/configure_bgp.txt
+2025-03-09 19:02:50,957 - ERROR - Connection file not found: [Errno 2] No such file or directory: './data/connection.yml'
+2025-03-09 19:02:50,957 - ERROR - Main process failed: [Errno 2] No such file or directory: './data/connection.yml'
+2025-03-09 19:06:28,307 - INFO - Starting configuration generation
+2025-03-09 19:06:32,240 - INFO - Configuration generated: ./generated_configurations/configure_bgp.txt
+2025-03-09 19:06:32,240 - INFO - Loaded 1 devices
+2025-03-09 19:06:32,241 - INFO - Connecting to 172.27.200.200 as admin...
+2025-03-09 19:06:33,019 - INFO - Connected (version 2.0, client OpenSSH_7.9)
+2025-03-09 19:06:34,028 - INFO - Authentication (password) successful!
+2025-03-09 19:06:34,082 - INFO - [host 172.27.200.200 session 0x7f62f454f5f0] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:hello xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"><nc:capabilities><nc:capability>urn:ietf:params:netconf:base:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:base:1.1</nc:capability><nc:capability>urn:ietf:params:netconf:capability:writable-running:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:candidate:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:confirmed-commit:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:rollback-on-error:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:startup:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:url:1.0?scheme=http,ftp,file,https,sftp</nc:capability><nc:capability>urn:ietf:params:netconf:capability:validate:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:xpath:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:notification:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:interleave:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:with-defaults:1.0</nc:capability></nc:capabilities></nc:hello>]]>]]>'
+2025-03-09 19:06:38,316 - INFO - [host 172.27.200.200 session 0x7f62f454f5f0] Received message from host
+2025-03-09 19:06:38,316 - INFO - [host 172.27.200.200 session-id 17063] initialized: session-id=17063 | server_capabilities=<dict_keyiterator object at 0x7f62f3f1a480>
+2025-03-09 19:06:38,317 - INFO - Connected to 172.27.200.200
+2025-03-09 19:06:38,317 - INFO - [host 172.27.200.200 session-id 17063] Requesting 'ExecuteRpc'
+2025-03-09 19:06:38,417 - INFO - [host 172.27.200.200 session-id 17063] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:18e599c5-c905-495c-95aa-d700a06a7222"><get-configuration format="set"/></nc:rpc>]]>]]>'
+2025-03-09 19:06:38,587 - INFO - [host 172.27.200.200 session-id 17063] Received message from host
+2025-03-09 19:06:38,588 - INFO - Backed up config to ./backups/backup_172.27.200.200_20250309_190638.txt
+2025-03-09 19:06:38,588 - INFO - [host 172.27.200.200 session-id 17063] Requesting 'ExecuteRpc'
+2025-03-09 19:06:38,687 - INFO - [host 172.27.200.200 session-id 17063] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:abac740e-71b4-4d98-a781-cf1f86c9f789"><lock-configuration/></nc:rpc>]]>]]>'
+2025-03-09 19:06:38,865 - INFO - [host 172.27.200.200 session-id 17063] Received message from host
+2025-03-09 19:06:38,865 - INFO - [host 172.27.200.200 session-id 17063] Requesting 'ExecuteRpc'
+2025-03-09 19:06:38,965 - INFO - [host 172.27.200.200 session-id 17063] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:56186346-5145-4194-81d9-1512282d94ec"><load-configuration format="text" action="set"><configuration-set># Jinja2 template for Juniper BGP configuration in \'set\' format\n# Each line starts with \'set\' followed by the full configuration path and value\n\nset protocols bgp group EXTERNAL type external\nset protocols bgp group EXTERNAL local-address 192.168.1.1\n\nset protocols bgp group EXTERNAL neighbor 192.168.1.2 peer-as 65002\n\nset protocols bgp group EXTERNAL neighbor 192.168.1.3 peer-as 65003\n</configuration-set></load-configuration></nc:rpc>]]>]]>'
+2025-03-09 19:06:39,124 - INFO - [host 172.27.200.200 session-id 17063] Received message from host
+2025-03-09 19:06:39,124 - INFO - [host 172.27.200.200 session-id 17063] Requesting 'ExecuteRpc'
+2025-03-09 19:06:39,224 - INFO - [host 172.27.200.200 session-id 17063] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:fa480585-4b92-41a8-8e49-c4079278e638"><unlock-configuration/></nc:rpc>]]>]]>'
+2025-03-09 19:06:39,486 - INFO - [host 172.27.200.200 session-id 17063] Received message from host
+2025-03-09 19:06:39,486 - ERROR - Configuration failed on 172.27.200.200: ConfigLoadError(severity: error, bad_element: #, message: error: unknown command
+error: unknown command)
+2025-03-09 19:06:39,486 - INFO - [host 172.27.200.200 session-id 17063] Requesting 'ExecuteRpc'
+2025-03-09 19:06:39,586 - INFO - [host 172.27.200.200 session-id 17063] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:f0845d84-a13c-43f9-9fdd-560596422c09"><lock-configuration/></nc:rpc>]]>]]>'
+2025-03-09 19:06:39,666 - INFO - [host 172.27.200.200 session-id 17063] Received message from host
+2025-03-09 19:06:39,666 - INFO - [host 172.27.200.200 session-id 17063] Requesting 'ExecuteRpc'
+2025-03-09 19:06:39,766 - INFO - [host 172.27.200.200 session-id 17063] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:be931f4a-6d62-448a-92be-aa695547e2ff"><load-configuration compare="rollback" rollback="0"/></nc:rpc>]]>]]>'
+2025-03-09 19:06:39,976 - INFO - [host 172.27.200.200 session-id 17063] Received message from host
+2025-03-09 19:06:39,976 - INFO - Rolled back changes on 172.27.200.200
+2025-03-09 19:06:39,976 - INFO - [host 172.27.200.200 session-id 17063] Requesting 'ExecuteRpc'
+2025-03-09 19:06:40,076 - INFO - [host 172.27.200.200 session-id 17063] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:b177932c-eaaf-4442-9626-2676aada9ce6"><unlock-configuration/></nc:rpc>]]>]]>'
+2025-03-09 19:06:40,204 - INFO - [host 172.27.200.200 session-id 17063] Received message from host
+2025-03-09 19:06:40,204 - ERROR - Processing failed for 172.27.200.200: ConfigLoadError(severity: error, bad_element: #, message: error: unknown command
+error: unknown command)
+2025-03-09 19:06:40,205 - ERROR - Main process failed: 'Device' object has no attribute 'is_alive'
+2025-03-09 19:12:55,032 - INFO - Starting configuration generation
+2025-03-09 19:12:59,429 - INFO - Configuration generated: ./generated_configurations/configure_bgp.txt
+2025-03-09 19:12:59,429 - INFO - Loaded 1 devices
+2025-03-09 19:12:59,429 - INFO - Connecting to 172.27.200.200 as admin...
+2025-03-09 19:13:00,183 - INFO - Connected (version 2.0, client OpenSSH_7.9)
+2025-03-09 19:13:01,197 - INFO - Authentication (password) successful!
+2025-03-09 19:13:01,384 - INFO - [host 172.27.200.200 session 0x7fa6bbbb15b0] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:hello xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"><nc:capabilities><nc:capability>urn:ietf:params:netconf:base:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:base:1.1</nc:capability><nc:capability>urn:ietf:params:netconf:capability:writable-running:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:candidate:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:confirmed-commit:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:rollback-on-error:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:startup:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:url:1.0?scheme=http,ftp,file,https,sftp</nc:capability><nc:capability>urn:ietf:params:netconf:capability:validate:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:xpath:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:notification:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:interleave:1.0</nc:capability><nc:capability>urn:ietf:params:netconf:capability:with-defaults:1.0</nc:capability></nc:capabilities></nc:hello>]]>]]>'
+2025-03-09 19:13:05,549 - INFO - [host 172.27.200.200 session 0x7fa6bbbb15b0] Received message from host
+2025-03-09 19:13:05,549 - INFO - [host 172.27.200.200 session-id 17327] initialized: session-id=17327 | server_capabilities=<dict_keyiterator object at 0x7fa6ba5ca7a0>
+2025-03-09 19:13:05,550 - INFO - Connected to 172.27.200.200
+2025-03-09 19:13:05,550 - INFO - [host 172.27.200.200 session-id 17327] Requesting 'ExecuteRpc'
+2025-03-09 19:13:05,650 - INFO - [host 172.27.200.200 session-id 17327] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:5335f034-eaf7-41e0-b855-17450eba1336"><get-configuration format="set"/></nc:rpc>]]>]]>'
+2025-03-09 19:13:05,832 - INFO - [host 172.27.200.200 session-id 17327] Received message from host
+2025-03-09 19:13:05,833 - INFO - Backed up config to ./backups/backup_172.27.200.200_20250309_191305.txt
+2025-03-09 19:13:05,833 - INFO - [host 172.27.200.200 session-id 17327] Requesting 'ExecuteRpc'
+2025-03-09 19:13:05,933 - INFO - [host 172.27.200.200 session-id 17327] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:723ac35d-365e-4e39-9cfd-ef3fba9b347a"><lock-configuration/></nc:rpc>]]>]]>'
+2025-03-09 19:13:06,074 - INFO - [host 172.27.200.200 session-id 17327] Received message from host
+2025-03-09 19:13:06,075 - INFO - [host 172.27.200.200 session-id 17327] Requesting 'ExecuteRpc'
+2025-03-09 19:13:06,175 - INFO - [host 172.27.200.200 session-id 17327] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:389f105d-ead0-4b4d-bc5c-32b4e12d53fd"><load-configuration format="text" action="set"><configuration-set>set protocols bgp group EXTERNAL type external\nset protocols bgp group EXTERNAL local-address 192.168.1.1\n\nset protocols bgp group EXTERNAL neighbor 192.168.1.2 peer-as 65002\n\nset protocols bgp group EXTERNAL neighbor 192.168.1.3 peer-as 65003\n</configuration-set></load-configuration></nc:rpc>]]>]]>'
+2025-03-09 19:13:06,349 - INFO - [host 172.27.200.200 session-id 17327] Received message from host
+2025-03-09 19:13:06,349 - INFO - Configuration loaded on 172.27.200.200
+2025-03-09 19:13:06,349 - INFO - [host 172.27.200.200 session-id 17327] Requesting 'ExecuteRpc'
+2025-03-09 19:13:06,449 - INFO - [host 172.27.200.200 session-id 17327] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:7538b549-d844-4cb1-94e6-3eb08c6c8666"><commit-configuration><check/></commit-configuration></nc:rpc>]]>]]>'
+2025-03-09 19:13:18,354 - INFO - [host 172.27.200.200 session-id 17327] Received message from host
+2025-03-09 19:13:18,354 - INFO - [host 172.27.200.200 session-id 17327] Requesting 'ExecuteRpc'
+2025-03-09 19:13:18,454 - INFO - [host 172.27.200.200 session-id 17327] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:3444eeb8-b0b1-44ac-bd40-f6b2f8a44262"><commit-configuration/></nc:rpc>]]>]]>'
+2025-03-09 19:13:32,000 - INFO - [host 172.27.200.200 session-id 17327] Received message from host
+2025-03-09 19:13:32,001 - INFO - Configuration committed on 172.27.200.200
+2025-03-09 19:13:32,001 - INFO - [host 172.27.200.200 session-id 17327] Requesting 'ExecuteRpc'
+2025-03-09 19:13:32,100 - INFO - [host 172.27.200.200 session-id 17327] Sending:
+b'<?xml version="1.0" encoding="UTF-8"?><nc:rpc xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="urn:uuid:8f4d9349-9ddc-4c56-956b-52dd44d48a3f"><unlock-configuration/></nc:rpc>]]>]]>'
+2025-03-09 19:13:32,119 - INFO - [host 172.27.200.200 session-id 17327] Received message from host
+2025-03-09 19:13:32,120 - ERROR - Processing failed for 172.27.200.200: 'Device' object has no attribute 'is_alive'
+2025-03-09 19:13:32,120 - ERROR - Main process failed: 'Device' object has no attribute 'is_alive'
