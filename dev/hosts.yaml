@@ -1,0 +1,5 @@
+devices:
+  - hostname: "172.27.200.200"
+    username: "admin"
+    password: "manolis1"
+    interval: 30

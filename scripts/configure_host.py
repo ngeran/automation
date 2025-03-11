@@ -35,8 +35,9 @@ def apply_configuration(dev, config_file):
             cu.commit_check()
             cu.commit()
             logger.info(f"Configuration committed on {dev.hostname or dev.host}")
+            print(f"Success: Configuration applied to {dev.hostname or dev.host}.")
 
-        return True
+        return True  # Indicates success
 
     except Exception as e:
         logger.error(f"Configuration failed on {dev.hostname or dev.host}: {e}")
@@ -80,7 +81,9 @@ def apply_config_to_all(devices, config_file):
                 continue
 
             print(f"Step 4: Applying configuration to {host}...")
-            apply_configuration(dev, config_file)
+            success = apply_configuration(dev, config_file)
+            if success:
+                print(f"Step 5: Confirmed - {host} successfully configured.")
             disconnect_from_device(dev)
 
         except Exception as e:
